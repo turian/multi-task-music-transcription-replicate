@@ -14,13 +14,14 @@ image = Image(
     python_version="python3.10",
     # python_packages=[ ],
     commands=[
+        "pip3 install setuptools==70.3.0",
+        "python3 -m pip install gsutil",
+        "gsutil -q -m cp -r gs://mt3/checkpoints .",
+        "gsutil -q -m cp gs://magentadata/soundfonts/SGM-v2.01-Sal-Guit-Bass-V1.3.sf2 .",
         "apt-get update -y && apt-get install libfluidsynth3 build-essential libasound2-dev libjack-dev -y",
         "git clone --branch=main https://github.com/magenta/mt3 && cd mt3 && python3 -m pip install jax[cuda12_local] nest-asyncio pyfluidsynth==1.3.0 -e . -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html",
-        "python3 -m pip install gsutil",
-        "/root/.pyenv/versions/3.10.14/bin/gsutil -q -m cp -r gs://mt3/checkpoints .",
-        "/root/.pyenv/versions/3.10.14/bin/gsutil -q -m cp gs://magentadata/soundfonts/SGM-v2.01-Sal-Guit-Bass-V1.3.sf2 .",
     ],
-    base_image="docker.io/nvidia/cuda:12.2-runtime-ubuntu20.04",
+    base_image="docker.io/nvidia/cuda:12.2.2-runtime-ubuntu22.04",
 )
 
 
@@ -28,8 +29,9 @@ image = Image(
 def predict(
     audio_file: str,
     model_type: str,
-) -> Path:
+) -> str:
     import os
+    import shutil
     import tempfile
 
     import note_seq
@@ -45,7 +47,7 @@ def predict(
             est_ns = model(audio)
             midi_file = os.path.join(temp_dir, os.path.basename(audio_file) + ".mid")
             note_seq.sequence_proto_to_midi_file(est_ns, midi_file)
-            return Path(midi_file)
+            return midi_file
         except:
             raise
         finally:
