@@ -27,7 +27,7 @@ class Predictor(BasePredictor):
     ) -> Path:
         model = self._load_model(model_type)
         audio, sr = note_seq.audio_io.wav_data_to_samples_librosa(
-            audio_file.read(), sample_rate=16000
+            audio_file, sample_rate=16000
         )
         est_ns = model(audio)
         midi_file = "/tmp/transcribed.mid"
