@@ -20,9 +20,9 @@ class Predictor(BasePredictor):
         self,
         audio_file: Path = Input(description="Input audio file"),
         model_type: str = Input(
-            "Model type: ismir2021 for piano, mt3 for multi-instrument",
+            description="Model type: ismir2021 for piano, mt3 for multi-instrument",
             choices=["ismir2021", "mt3"],
-        #    default="mt3",
+            default="mt3",
         ),
     ) -> Path:
         model = self._load_model(model_type)
