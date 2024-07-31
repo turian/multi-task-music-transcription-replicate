@@ -2,7 +2,6 @@ import cog
 import note_seq
 import numpy as np
 import tensorflow as tf
-from google.colab import files
 from mt3 import InferenceModel
 
 
