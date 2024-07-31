@@ -37,7 +37,9 @@ class Predictor(BasePredictor):
                 audio = note_seq.audio_io.load_audio(audio_file, sample_rate=16000)
                 est_ns = model(audio)
                 midi_file = os.path.join(
-                    temp_dir, os.path.basename(audio_file) + ".mid"
+                    #temp_dir, os.path.basename(audio_file) + ".mid"
+                    #temp_dir, "transcription.mid"
+                    "/tmp", "transcription.mid"
                 )
                 note_seq.sequence_proto_to_midi_file(est_ns, midi_file)
                 return Path(midi_file)
