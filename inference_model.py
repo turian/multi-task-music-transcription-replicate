@@ -11,15 +11,8 @@ import seqio
 import t5
 import t5x
 import tensorflow.compat.v2 as tf
-from mt3 import (
-    metrics_utils,
-    models,
-    network,
-    note_sequences,
-    preprocessors,
-    spectrograms,
-    vocabularies,
-)
+from mt3 import (metrics_utils, models, network, note_sequences, preprocessors,
+                 spectrograms, vocabularies)
 
 # from google.colab import files
 

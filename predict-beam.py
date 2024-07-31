@@ -1,15 +1,9 @@
-import os
-import tempfile
-
-import note_seq
-import numpy as np
-import tensorflow as tf
-from beam import Image, endpoint
-
-from inference_model import InferenceModel
+from beam import Image, endpoint, function
 
 
 def _load_model(model_type):
+    from inference_model import InferenceModel
+
     # Set model based on the choice
     checkpoint_path = f"/checkpoints/{model_type}/"
     model = InferenceModel(checkpoint_path, model_type)
@@ -35,6 +29,13 @@ def predict(
     audio_file: str,
     model_type: str,
 ) -> Path:
+    import os
+    import tempfile
+
+    import note_seq
+    import numpy as np
+    import tensorflow as tf
+
     # Make a temporary directory
     with tempfile.TemporaryDirectory() as temp_dir:
         try:
@@ -53,4 +54,4 @@ def predict(
 
 
 if __name__ == "__main__":
-    predict.remote()
+    predict.remote("file_example_WAV_1MG.wav", "mt3")
