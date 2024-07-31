@@ -1,0 +1,31 @@
+build:
+  gpu: true
+  python_version: "3.8"
+  system_packages:
+    - libfluidsynth3
+    - build-essential
+    - libasound2-dev
+    - libjack-dev
+  python_packages:
+    - jax[cuda12_local]
+    - nest-asyncio
+    - pyfluidsynth==1.3.0
+    - "git+https://github.com/magenta/mt3@main"
+    - t5
+    - tensorflow==2.7.0  # or compatible version if required by mt3
+
+predict: "predict.py:Model"
+
+replicate:
+  description: "Music transcription using transformer-based models by Google's Magenta team."
+  inputs:
+    - type: file
+      name: audio_file
+      description: "Upload an audio file (MP3 or WAV) for transcription."
+    - type: select
+      name: model_type
+      description: "Choose the model type for transcription."
+      choices:
+        - ismir2021
+        - mt3
+      default: mt3
